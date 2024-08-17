@@ -3,11 +3,11 @@ import { Schema, model } from "mongoose";
 export const productSchema = new Schema(
   {
     id: { type: Schema.Types.ObjectId },
-    name: { type: String, require: [true, "name is required"] },
-    description: { type: String, require: [true, "description is required"] },
-    price: { type: Number, require: [true, "price is required"] },
-    image: { type: String, require: [true, "image is required"] },
-    category: { type: String, require: [true, "category is required"] },
+    name: { type: String, required: [true, "name is required"] },
+    description: { type: String, required: [true, "description is required"] },
+    price: { type: Number, required: [true, "price is required"] },
+    image: { type: String, required: [true, "image is required"] },
+    category: { type: String, required: [true, "category is required"] },
     systemRequirements: {
       minimun: {
         operatingSystem: { type: String },

@@ -1,5 +1,6 @@
+import ErrorNotFound from "../errors/ErrorNotFound";
 import ProductService from "../service/productService";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 const productService = new ProductService();
 
@@ -9,59 +10,51 @@ class ProductController {
     res.status(200).send(products);
   }
 
-  static async createProduct(req: Request, res: Response) {
+  static async createProduct(req: Request, res: Response, next: NextFunction) {
     try {
-      const createProduct = await productService.createProduct(req);
+      const createProduct = await productService.createProduct(req, next);
       res.status(201).json({
         message: "Product created successfully",
         data: createProduct,
       });
     } catch (error) {
-      if (error instanceof Error) {
-        res.status(400).send({ message: error.message });
-      }
+      next(error);
     }
   }
 
-  static async getProductById(req: Request, res: Response) {
+  static async getProductById(req: Request, res: Response, next: NextFunction) {
     try {
-      const productId = await productService.getIdProduct(req);
+      const productId = await productService.getIdProduct(req, next);
       if (productId === null) {
-        return res.status(200).json({ message: "Product not found" });
+        return next(new ErrorNotFound("Product not found"));
       }
       res.status(200).json(productId);
     } catch (error) {
-      if (error instanceof Error) {
-        res.status(400).send({ message: error.message });
-      }
+      next(error);
     }
   }
 
-  static async UpdateProduct(req: Request, res: Response) {
+  static async UpdateProduct(req: Request, res: Response, next: NextFunction) {
     try {
       const updateProduct = await productService.updateProduct(req);
       if (updateProduct === null) {
-        return res.status(200).json({ message: "Product not found" });
+        return next(new ErrorNotFound("Product not found"));
       }
       res.status(200).json({ message: "Product Updates Successfully" });
     } catch (error) {
-      if (error instanceof Error) {
-        res.status(400).send({ message: error.message });
-      }
+      next(error);
     }
   }
 
-  static async deleteProduct(req: Request, res: Response) {
+  static async deleteProduct(req: Request, res: Response, next: NextFunction) {
     try {
       const deleteProduct = await productService.deleteProduct(req);
       if (deleteProduct === null) {
-        return res.status(200).json({ message: "Product not found" });
+        return next(new ErrorNotFound("Product not found"));
       }
       res.status(200).json({ message: "Product deleted" });
     } catch (error) {
-      if (error instanceof Error) {
-        res.status(400).send({ message: error.message });
-      }
+      next(error);
     }
   }
 }

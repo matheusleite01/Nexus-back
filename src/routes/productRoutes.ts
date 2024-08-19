@@ -5,6 +5,7 @@ const routes = Router();
 
 routes
   .get("/products", ProductController.getAllProducts)
+  .get("/products/filter", ProductController.getProductByFilter)
   .get("/products/:id", ProductController.getProductById)
   .post("/products", ProductController.createProduct)
   .put("/products/:id", ProductController.UpdateProduct)

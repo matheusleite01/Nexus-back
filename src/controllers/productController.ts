@@ -57,6 +57,19 @@ class ProductController {
       next(error);
     }
   }
+
+  static async getProductByFilter(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const product = await productService.getProfuctByFilter(req);
+      res.status(200).send(product);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default ProductController;

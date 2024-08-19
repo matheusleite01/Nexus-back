@@ -1,5 +1,6 @@
 import { Product } from "../models/Product";
 import { Request, NextFunction } from "express";
+import filterSearch from "../utils/filterSearch";
 
 class ProductService {
   async getAllProduct() {
@@ -55,6 +56,19 @@ class ProductService {
     try {
       const deleteProduct = await Product.findByIdAndDelete(id);
       return deleteProduct;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getProfuctByFilter(req: Request) {
+    try {
+      const filter = await filterSearch(req);
+      const productFilter = await Product.find(
+        filter,
+        "name description price image category",
+      );
+      return productFilter;
     } catch (error) {
       return error;
     }

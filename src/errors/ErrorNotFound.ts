@@ -1,8 +1,8 @@
 import ErroBase from "./ErroBase";
 
 class ErrorNotFound extends ErroBase {
-  constructor(message = "Error Page") {
-    super(message, 404);
+  constructor(message = "Error Page", code = 400) {
+    super(message, code);
   }
 }
 

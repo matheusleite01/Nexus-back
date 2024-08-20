@@ -1,6 +1,7 @@
 import { Product } from "../models/Product";
 import { Request, NextFunction } from "express";
 import filterSearch from "../utils/filterSearch";
+import ErrorNotFound from "../errors/ErrorNotFound";
 
 class ProductService {
   async getAllProduct() {
@@ -16,7 +17,7 @@ class ProductService {
     const productFind = await Product.findOne({ name: req.body.name });
 
     if (productFind) {
-      throw new Error("Product already exists");
+      throw new ErrorNotFound("Product already exists", 404);
     }
 
     try {

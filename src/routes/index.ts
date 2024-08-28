@@ -4,9 +4,10 @@ import user from "./userRoutes";
 import auth from "./authRoutes";
 import cart from "./cartRoutes";
 import wishlist from "./wishlist";
+import swagger from "./swagger";
 
 const routes = (app: Express) => {
-  app.use(express.json(), auth, product, user, cart, wishlist);
+  app.use(express.json(), auth, swagger, product, user, cart, wishlist);
 };
 
 export default routes;

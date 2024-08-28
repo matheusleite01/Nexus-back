@@ -17,12 +17,11 @@ class ProductService {
     const productFind = await Product.findOne({ name: req.body.name });
 
     if (productFind) {
-      throw new ErrorNotFound("Product already exists", 404);
+      throw new ErrorNotFound("Product already exists", 400);
     }
 
     try {
       const product = await Product.create(req.body);
-      console.log(product);
       return product;
     } catch (error) {
       next(error);
@@ -64,7 +63,7 @@ class ProductService {
 
   async getProfuctByFilter(req: Request) {
     try {
-      const filter = await filterSearch(req);
+      const filter = await filterSearch(req); 
       const productFilter = await Product.find(
         filter,
         "name description price image category",
